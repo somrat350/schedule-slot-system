@@ -61,12 +61,12 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.user.name = token.name;
-        session.user.email = token.email;
-      }
+      session.user = {
+        id: token.id,
+        role: token.role,
+        name: token.name,
+        email: token.email,
+      };
       return session;
     },
   },
@@ -74,4 +74,6 @@ export const authOptions = {
   pages: {
     signIn: "/",
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };

@@ -1,6 +1,5 @@
 "use client";
 
-import CreateSlot from "@/components/CreateSlot";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Navbar from "@/components/Navbar";
 import SlotsTable from "@/components/SlotsTable";
@@ -10,10 +9,10 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function TeacherPage() {
+const StudentPage = () => {
+  const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
   const [slots, setSlots] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       const result = await getSlots();
@@ -23,28 +22,28 @@ export default function TeacherPage() {
     if (!session?.user) return;
     fetchData();
   }, [session]);
-
   if (status === "loading") return;
-  if (!session?.user || session?.user.role !== "teacher") {
+  if (!session?.user || session?.user.role !== "student") {
     toast.error("Unauthorized access!");
     redirect("/");
   }
-
   return (
-    <>
+    <div>
       <Navbar />
+
       <div className="px-4">
-        <h1 className="text-3xl font-bold mt-4 mb-2">Teacher Dashboard</h1>
+        <h1 className="text-3xl font-bold mt-4 mb-2">Student Dashboard</h1>
 
         <div className="flex items-center justify-between">
           <p>Total Slots: {loading ? <LoadingSpinner /> : slots?.length}</p>
-          <CreateSlot setSlots={setSlots} />
         </div>
 
         <div className="overflow-x-auto mt-6 border border-secondary/80">
           <SlotsTable slots={slots} loading={loading} />
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default StudentPage;

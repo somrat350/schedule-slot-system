@@ -34,7 +34,7 @@ export default function TeacherPage() {
     <>
       <Navbar />
       <div className="px-4">
-        <h1 className="text-3xl font-bold mt-4 mb-2">Teacher Dashboard</h1>
+        <h1 className="text-3xl font-bold mt-4 mb-2">All Slots</h1>
 
         <div className="flex items-center justify-between">
           <p>Total Slots: {loading ? <LoadingSpinner /> : slots?.length}</p>

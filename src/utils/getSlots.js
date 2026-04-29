@@ -1,5 +1,5 @@
-export const getSlots = async () => {
-  const res = await fetch("/api/teacher/slots", {
+export const getSlots = async (status = "all") => {
+  const res = await fetch(`/api/teacher/slots?status=${status}`, {
     credentials: "include",
   });
   const result = await res.json();

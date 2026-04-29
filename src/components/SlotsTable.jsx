@@ -1,10 +1,11 @@
 "use client";
 
 import { formatDate, formatTime } from "@/utils/formatTimes";
-import { SquarePen, Trash } from "lucide-react";
 import { useSession } from "next-auth/react";
+import BookNow from "./BookNow";
+import TeacherAction from "./TeacherAction";
 
-const SlotsTable = ({ slots, loading }) => {
+const SlotsTable = ({ slots, setSlots, loading }) => {
   const { data: session, status } = useSession();
   if (status === "loading") return;
   return (
@@ -49,19 +50,11 @@ const SlotsTable = ({ slots, loading }) => {
               <td>{formatTime(slot.endTime)}</td>
               <td className="capitalize">{slot.status}</td>
               <td>
-                {session?.user.role === "student" ? (
-                  <button className="btn btn-sm btn-secondary btn-wide">
-                    Book Now
-                  </button>
-                ) : (
-                  <div className="flex gap-2">
-                    <button className="btn btn-sm btn-square btn-info">
-                      <SquarePen size={20} />
-                    </button>
-                    <button className="btn btn-sm btn-square btn-warning">
-                      <Trash size={20} />
-                    </button>
-                  </div>
+                {session?.user.role === "student" && (
+                  <BookNow slot={slot} setSlots={setSlots} />
+                )}
+                {session?.user.role === "teacher" && (
+                  <TeacherAction slot={slot} />
                 )}
               </td>
             </tr>

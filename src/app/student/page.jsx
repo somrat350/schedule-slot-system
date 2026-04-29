@@ -10,12 +10,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const StudentPage = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const [slots, setSlots] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const result = await getSlots();
+      const result = await getSlots("available");
       setSlots(result.data);
       setLoading(false);
     }
@@ -39,7 +39,7 @@ const StudentPage = () => {
         </div>
 
         <div className="overflow-x-auto mt-6 border border-secondary/80">
-          <SlotsTable slots={slots} loading={loading} />
+          <SlotsTable slots={slots} setSlots={setSlots} loading={loading} />
         </div>
       </div>
     </div>

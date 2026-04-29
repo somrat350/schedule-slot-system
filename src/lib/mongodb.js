@@ -25,3 +25,4 @@ export async function connectCollection(collectionName) {
 }
 
 export const slotsCollection = await connectCollection("slots");
+export const bookingCollection = await connectCollection("booking");

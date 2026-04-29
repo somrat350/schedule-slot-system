@@ -4,8 +4,13 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 // GET ALL SLOTS
-export async function GET() {
+export async function GET(req) {
   try {
+    const status = req.nextUrl.searchParams.get("status");
+    const query = {};
+    if (status === "available" || status === "unavailable") {
+      query.status = status;
+    }
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
       return NextResponse.json({
@@ -14,7 +19,7 @@ export async function GET() {
         message: "Unauthorize access!",
       });
     }
-    const slots = await slotsCollection.find().toArray();
+    const slots = await slotsCollection.find(query).toArray();
     return NextResponse.json({
       statusCode: 200,
       success: true,

@@ -5,11 +5,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
+import DemoLogin from "./DemoLogin";
 
 const Login = () => {
   const router = useRouter();
-  const session = getSession();
-  console.log(session);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -50,6 +49,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="h-screen w-full flex items-center justify-center p-5">
       <div className="bg-base-300 w-full max-w-md p-10 rounded-2xl">
@@ -96,6 +96,8 @@ const Login = () => {
             )}
           </button>
         </form>
+        <div className="divider">OR</div>
+        <DemoLogin />
       </div>
     </div>
   );
